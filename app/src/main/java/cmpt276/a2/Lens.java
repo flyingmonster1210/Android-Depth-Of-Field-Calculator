@@ -22,6 +22,7 @@ public class Lens {
         }
     }
 
+    // F_num is aperture
     public Lens(Lens lens) {
         if(lens == null || lens.make == null) {
             throw new IllegalArgumentException("\nPROBLEM: in Lens constructor, lens == null || lens.make == null.");
@@ -34,12 +35,13 @@ public class Lens {
         }
     }
 
-    public Lens(String make, double f_num, double focal_len) {
-        if(f_num <= 0 || focal_len <= 0 || make == null || make.equals("")) {
+    // f_num is aperture
+    public Lens(String make, double aperture, double focal_len) {
+        if(aperture <= 0 || focal_len <= 0 || make == null || make.equals("")) {
             throw new IllegalArgumentException("\nPROBLEM: in Lens constructor, f_num <= 0 || focal_len <= 0 || make == null || make.equals(\"\").");
         }
         this.make = make;
-        F_num = f_num;
+        F_num = aperture;
         this.focal_len = focal_len;
 
     }

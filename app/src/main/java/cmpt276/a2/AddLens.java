@@ -31,54 +31,62 @@ public class AddLens extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_lens);
+        // set toolbar's name
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.setTitle("Lens Details");
 
+        // initial i, and print information - "switch to save lens page!"
         Intent i = getIntent();
         String message = i.getStringExtra("Extra - message");
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
+        // receive information from user
         makeInput = (EditText) findViewById(R.id.makeInput);
         apertureInput = (EditText) findViewById(R.id.apertureInput);
         focalLengthInput = (EditText) findViewById(R.id.focalLengthInput);
 //        Log.i("AddLens", String.valueOf(aperture));
 
-        // the up bottom
+        // set up the "up" bottom
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
     }
 
+    // set up the toolbar - connect it to menu_add_lens.xml
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_add_lens, menu);
         return true;
     }
 
+    // functions that shown on the toolbar
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save_data:
                 Toast.makeText(this, "saving!", Toast.LENGTH_SHORT).show();
+                make = makeInput.getText().toString();
+                aperture = Double.valueOf(apertureInput.getText().toString());
+                focalLength = Double.valueOf(focalLengthInput.getText().toString());
+                addLensToManager();
                 return true;
 
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-//    public static Intent makeLaunchIntent(Context c, String message) {
-//        Intent intent = new Intent(c, AddLens.class);
-//        intent.putExtra("Extra - message", message);
-//        return intent;
-//    }
 
+    // interface for MainActivity to switch to AddLens activity
     public static Intent makeLaunchIntent(Context c, String message) {
         Intent intent = new Intent(c, AddLens.class);
         intent.putExtra("Extra - message", message);
         return intent;
     }
 
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, AddLens.class);
+    // add a lens to the exist manager object
+    private void addLensToManager() {
+        Lens[] lenses = {};
+        Lens_manager manager = Lens_manager.getInstance(lenses);
+        manager.add(new Lens(make, aperture, focalLength));
     }
 }

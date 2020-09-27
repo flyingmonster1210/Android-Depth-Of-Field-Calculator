@@ -18,19 +18,25 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // set the toolbar's name
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         this.setTitle("Depth of Field Calculator");
 
+        // initial the lens manger
         populateListView();
+
+        // switch to another activity - AddLens
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(view -> {
-                Intent i = AddLens.makeLaunchIntent(MainActivity.this, "Hello world!");
+                Intent i = AddLens.makeLaunchIntent(MainActivity.this, "switch to save lens page!");
                 startActivity(i);
         });
     }
 
     private void populateListView() {
+        // some lenses are used to initial the lens manager
         Lens[] lenses = {
                 (new Lens("Canon", 1.8, 50)),
                 (new Lens("Tamron", 2.8, 90)),

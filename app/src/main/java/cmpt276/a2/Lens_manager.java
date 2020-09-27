@@ -23,6 +23,7 @@ public class Lens_manager implements Iterable<Lens>{
 
     }
 
+    // create a manager only once
     public static Lens_manager getInstance(Lens[] lenses) {
         if(instance == null) {
             instance = new Lens_manager(lenses);
@@ -30,14 +31,11 @@ public class Lens_manager implements Iterable<Lens>{
         return instance;
     }
 
-    private Lens_manager() {
-        // Private to prevent anyone else from instantiating
-    }
+//    private Lens_manager() {
+//        // Private to prevent anyone else from instantiating
+//    }
 
-    private Lens_manager(Lens lens) {
-        manager.add(lens);
-    }
-
+    // the only constructor we will use
     private Lens_manager(Lens[] lens) {
         for(Lens tmp : lens)
             manager.add(tmp);
