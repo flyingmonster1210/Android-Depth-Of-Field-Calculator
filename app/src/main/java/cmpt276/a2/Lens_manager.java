@@ -24,16 +24,23 @@ public class Lens_manager implements Iterable<Lens>{
     }
 
     // create a manager only once
-    public static Lens_manager getInstance(Lens[] lenses) {
+    public static Lens_manager getInstance() {
         if(instance == null) {
+            // some lenses are used to initialize the lens manager
+            Lens[] lenses = {
+                    (new Lens("Canon", 1.8, 50)),
+                    (new Lens("Tamron", 2.8, 90)),
+                    (new Lens("Sigma", 2.8, 200)),
+                    (new Lens("Nikon", 4, 200)),
+                    (new Lens("ElCheepo", 12, 24)),
+                    (new Lens("Leica", 5.6, 1600)),
+                    (new Lens("TheWide", 1.0, 16)),
+                    (new Lens("IWish", 1.0, 200)),
+            };
             instance = new Lens_manager(lenses);
         }
         return instance;
     }
-
-//    private Lens_manager() {
-//        // Private to prevent anyone else from instantiating
-//    }
 
     // the only constructor we will use
     private Lens_manager(Lens[] lens) {

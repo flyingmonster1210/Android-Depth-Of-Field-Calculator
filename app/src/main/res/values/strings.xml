@@ -13,4 +13,5 @@
     <string name="button">Button</string>
     <string name="save_data">save_data</string>
     <string name="selete_a_lens_to_use">Selete a lens to use</string>
+    <string name="title_activity_calculate_depth_of_field">CalculateDepthOfField</string>
 </resources>

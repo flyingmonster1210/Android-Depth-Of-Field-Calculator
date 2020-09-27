@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -24,30 +27,33 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         this.setTitle("Depth of Field Calculator");
 
-        // initial the lens manger
+        // initialize the lens manger
         populateListView();
+        registerClick();
 
         // switch to another activity - AddLens
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(view -> {
-                Intent i = AddLens.makeLaunchIntent(MainActivity.this, "switch to save lens page!");
-                startActivity(i);
+                Intent i_AddLens = AddLens.makeLaunchIntent(MainActivity.this, "switch to Lens saving!");
+                startActivity(i_AddLens);
+        });
+    }
+
+    private void registerClick() {
+        ListView list = (ListView) findViewById(R.id.ListViewMain);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i_Calculator = CalculateDepthOfField.makeLaunchIntent(MainActivity.this, "switch to the calculator!");
+                startActivity(i_Calculator);
+//                TextView textView = (TextView) view;
+//                String message = "You click" + textView.getText().toString();
+            }
         });
     }
 
     private void populateListView() {
-        // some lenses are used to initial the lens manager
-        Lens[] lenses = {
-                (new Lens("Canon", 1.8, 50)),
-                (new Lens("Tamron", 2.8, 90)),
-                (new Lens("Sigma", 2.8, 200)),
-                (new Lens("Nikon", 4, 200)),
-                (new Lens("ElCheepo", 12, 24)),
-                (new Lens("Leica", 5.6, 1600)),
-                (new Lens("TheWide", 1.0, 16)),
-                (new Lens("IWish", 1.0, 200)),
-        };
-        manager = Lens_manager.getInstance(lenses);
+        manager = Lens_manager.getInstance();
         ArrayAdapter<Lens> adapter = new ArrayAdapter<Lens>(this, R.layout.da_item, manager.getManager());
         ListView list = (ListView) findViewById(R.id.ListViewMain);
         list.setAdapter(adapter);
