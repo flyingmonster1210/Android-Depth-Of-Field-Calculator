@@ -36,7 +36,7 @@ public class AddLens extends AppCompatActivity {
         setSupportActionBar(toolbar);
         this.setTitle("Lens Details");
 
-        // initial i, and print information - "switch to save lens page!"
+        // initial Intent i, and print information - "switch to save lens page!"
         Intent i = getIntent();
         String message = i.getStringExtra("Extra - message");
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -64,7 +64,7 @@ public class AddLens extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save_data:
-                Toast.makeText(this, "saving!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "saved!", Toast.LENGTH_SHORT).show();
                 make = makeInput.getText().toString();
                 aperture = Double.valueOf(apertureInput.getText().toString());
                 focalLength = Double.valueOf(focalLengthInput.getText().toString());
