@@ -12,6 +12,8 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,6 +29,7 @@ public class AddLens extends AppCompatActivity {
     private EditText focalLengthInput;
     private EditText apertureInput;
     private EditText makeInput;
+    private boolean canSave = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +50,43 @@ public class AddLens extends AppCompatActivity {
         makeInput = (EditText) findViewById(R.id.makeInput);
         apertureInput = (EditText) findViewById(R.id.apertureInput);
         focalLengthInput = (EditText) findViewById(R.id.focalLengthInput);
+        makeInput.addTextChangedListener(assignCanSave);
+        apertureInput.addTextChangedListener(assignCanSave);
+        focalLengthInput.addTextChangedListener(assignCanSave);
 
         // set up the "up" bottom
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
     }
+    // do inputs error checking
+    private TextWatcher assignCanSave = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            String strMake = makeInput.getText().toString().trim();
+            String strAperture = apertureInput.getText().toString().trim();
+            String strFocalLength = focalLengthInput.getText().toString().trim();
+            if(strMake.length() <= 0 || strAperture.length() <= 0 || strFocalLength.length() <= 0) {
+                canSave = false;
+                return ;
+            }
+            double tAperture = Double.valueOf(apertureInput.getText().toString());
+            double tFocalLength = Double.valueOf(focalLengthInput.getText().toString());
+            if(tAperture >= 1.0 && tAperture <= 22 && tFocalLength > 0)
+                canSave = true;
+            else
+                canSave = false;
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
     // set up the toolbar - connect it to menu_add_lens.xml
     @Override
@@ -65,11 +100,16 @@ public class AddLens extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save_data:
-                Toast.makeText(this, "saved!", Toast.LENGTH_SHORT).show();
-                make = makeInput.getText().toString();
-                aperture = Double.valueOf(apertureInput.getText().toString());
-                focalLength = Double.valueOf(focalLengthInput.getText().toString());
-                addLensToManager();
+                if(canSave) {
+                    Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
+                    make = makeInput.getText().toString();
+                    aperture = Double.valueOf(apertureInput.getText().toString());
+                    focalLength = Double.valueOf(focalLengthInput.getText().toString());
+                    addLensToManager();
+                }
+                else {
+                    Toast.makeText(this, "Cannot save with invalid inputs!", Toast.LENGTH_SHORT).show();
+                }
                 return true;
 
             default:
