@@ -43,7 +43,6 @@ public class Lens {
         this.make = make;
         F_num = aperture;
         this.focal_len = focal_len;
-
     }
 
     public String getMake() {
@@ -59,7 +58,7 @@ public class Lens {
     }
 
     public String toString() {
-        return make + " " + focal_len + "mm F" + F_num;
+        return " " + make + " " + focal_len + "mm F" + F_num;
     }
 }
 

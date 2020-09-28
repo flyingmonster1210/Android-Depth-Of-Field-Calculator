@@ -175,7 +175,7 @@
         android:layout_marginLeft="24dp"
         android:ems="10"
         android:hint="ex. 1.5 for 1.5m"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         app:layout_constraintBottom_toBottomOf="@+id/distance"
         app:layout_constraintStart_toEndOf="@+id/distance"
         app:layout_constraintTop_toTopOf="@+id/distance" />
@@ -188,7 +188,7 @@
         android:layout_marginLeft="24dp"
         android:ems="10"
         android:hint="ex. 2.8 for F2.8"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         app:layout_constraintBottom_toBottomOf="@+id/aperture"
         app:layout_constraintStart_toEndOf="@+id/aperture"
         app:layout_constraintTop_toTopOf="@+id/aperture" />

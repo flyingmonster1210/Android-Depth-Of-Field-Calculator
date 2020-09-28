@@ -64,6 +64,15 @@ public class Lens_manager implements Iterable<Lens>{
         manager.add(len);
     }
 
+    public void removeLens(int index) {
+        if(index > manager.size() || index < 0) {
+            System.out.println("PROBLEM: in getByIndex, index should be [0, " + manager.size() + ").");
+        }
+        else {
+            manager.remove(index);
+        }
+    }
+
     public int getSize(){
         return manager.size();
     }
@@ -73,13 +82,13 @@ public class Lens_manager implements Iterable<Lens>{
         return manager.iterator();
     }
 
-    public Lens getByIndex(int i) {
-        if(i > manager.size() || i < 0) {
+    public Lens getByIndex(int index) {
+        if(index > manager.size() || index < 0) {
             System.out.println("PROBLEM: in getByIndex, i should be [0, " + manager.size() + ").");
             return new Lens("", 0, 0);
         }
 
-        return manager.get(i);
+        return manager.get(index);
     }
 
     public void printAll() {

@@ -7,14 +7,18 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.NavUtils;
 
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -51,7 +55,7 @@ public class CalculateDepthOfField extends AppCompatActivity {
         // initialize Intent i, and print information - "switch to the calculator!"
         Intent i = getIntent();
         String message = i.getStringExtra(EXTRA_MESSAGE);
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
         // get the lens which is selected by the user, and print it
         Lens_manager manager = Lens_manager.getInstance();
@@ -144,5 +148,30 @@ public class CalculateDepthOfField extends AppCompatActivity {
                 updateUIALL();
             }
         });
+    }
+
+    // following two override functions will set up the remove button on the tool bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_calculate_depth_of_field, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_delete_lens:
+                Lens_manager manager = Lens_manager.getInstance();
+                if(index >= 0 && index < manager.getSize()) {
+                    Toast.makeText(this, "lens" + manager.getByIndex(index) + " is removed!", Toast.LENGTH_SHORT).show();
+                    manager.removeLens(index);
+                    NavUtils.navigateUpFromSameTask(this);
+                }
+                else
+                    Toast.makeText(this, "please chose another lens.", Toast.LENGTH_SHORT).show();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

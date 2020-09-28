@@ -60,7 +60,7 @@
         android:layout_marginLeft="8dp"
         android:ems="10"
         android:hint="ex: 200 for 200mm"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -83,7 +83,7 @@
         android:layout_marginLeft="8dp"
         android:ems="10"
         android:hint="ex: 2.8 for F2.8"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 

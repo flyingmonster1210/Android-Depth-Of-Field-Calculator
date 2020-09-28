@@ -41,7 +41,7 @@ public class AddLens extends AppCompatActivity {
         // initialize Intent i, and print information - "switch to Lens saving!"
         Intent i = getIntent();
         String message = i.getStringExtra(EXTRA_MESSAGE);
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
         // receive information from user
         makeInput = (EditText) findViewById(R.id.makeInput);
