@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i_Calculator = CalculateDepthOfField.makeLaunchIntent(MainActivity.this, "switch to the calculator!", position);
                 startActivity(i_Calculator);
-//                TextView textView = (TextView) view;
-//                String message = "You click" + textView.getText().toString();
             }
         });
     }

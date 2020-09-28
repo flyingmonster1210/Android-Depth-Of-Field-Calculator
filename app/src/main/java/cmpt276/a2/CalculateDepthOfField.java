@@ -58,6 +58,8 @@ public class CalculateDepthOfField extends AppCompatActivity {
         Lens lens = manager.getByIndex(index);
         TextView lensDetails = findViewById(R.id.lensDetails);
         lensDetails.setText(lens.toString());
+        TextView apertureLimit = findViewById(R.id.apertureLimit);
+        apertureLimit.setText("[" + lens.getF_num() + ", 22]");
 
         // changes in input
         inputDistance = (EditText) findViewById(R.id.inputDistance);

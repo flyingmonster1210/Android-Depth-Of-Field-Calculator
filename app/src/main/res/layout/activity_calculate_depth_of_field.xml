@@ -209,8 +209,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
+        android:textSize="16sp"
+        android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/textView1"
         app:layout_constraintStart_toEndOf="@+id/textView1"
         app:layout_constraintTop_toTopOf="@+id/textView1" />
+
+    <TextView
+        android:id="@+id/apertureLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/aperture"
+        app:layout_constraintStart_toStartOf="@+id/aperture"
+        app:layout_constraintTop_toBottomOf="@+id/aperture" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
