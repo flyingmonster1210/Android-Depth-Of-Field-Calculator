@@ -7,19 +7,6 @@ public class Depth_calculator {
     private double aperture; // aperture to use for the photo, it is a f_num, in mm
     private static final double circle = 0.029; // “Circle of confusion” of the camera, in mm
 
-    // a simple test
-//    public static void main(String[] argv) {
-//        Lens lens = new Lens("Canon", 1.8, 50);
-//        Lens lens = new Lens("Tamron", 2.8, 90);
-//          // all functions' return values are in mm, remember to change them into m.
-//        Depth_calculator calculator = new Depth_calculator(lens, 1.1*1000, 1.8);
-//        Depth_calculator calculator = new Depth_calculator(lens, 2.0*1000, 2.8);
-//        System.out.println(lens);
-//        System.out.println("near: " + calculator.near_focal_point()/1000);
-//        System.out.println("far : " + calculator.far_focal_point()/1000);
-//        System.out.println("hPoint: " + calculator.hyper_focal_distance()/1000);
-//    }
-
     public Depth_calculator(Lens len, double distance, double aperture) {
         this.lens = len;
         this.distance = distance;
