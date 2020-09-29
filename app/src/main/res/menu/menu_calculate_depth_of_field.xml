@@ -7,6 +7,12 @@
     android:title="remove this lens"
     app:showAsAction="ifRoom"/>
 
+    <item
+        android:id="@+id/action_edit_lens"
+        android:icon="@drawable/ic_baseline_edit_24"
+        android:title="edit this lens"
+        app:showAsAction="ifRoom"/>
+
 <!--    &lt;!&ndash; Settings, should always be in the overflow &ndash;&gt;-->
 <!--    <item android:id="@+id/action_nothing"-->
 <!--        android:title="nothing"-->

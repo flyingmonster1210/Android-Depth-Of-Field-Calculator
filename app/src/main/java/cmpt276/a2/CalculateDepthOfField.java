@@ -46,7 +46,7 @@ public class CalculateDepthOfField extends AppCompatActivity {
         // set toolbar's name
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        this.setTitle("Calculate Depth of Field");
+        this.setTitle("Calculating DoF");
 
         // set up the "up" bottom
         ActionBar ab = getSupportActionBar();
@@ -90,7 +90,7 @@ public class CalculateDepthOfField extends AppCompatActivity {
         updateUISingle(outputNear, R.id.outputNear, near);
         updateUISingle(outputFar, R.id.outputFar, far);
     }
-    // always call by function - updateUIAll()
+    // always called by function - updateUIAll()
     private void updateUISingle(TextView textView, final int textViewID, double value) {
         textView = (TextView) findViewById(textViewID);
         if(validCheck[0] && validCheck[1])
@@ -105,6 +105,34 @@ public class CalculateDepthOfField extends AppCompatActivity {
         Intent intent = new Intent(c, CalculateDepthOfField.class);
         intent.putExtra("Extra - message", message);
         return intent;
+    }
+
+    // following two override functions will set up the remove button on the tool bar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_calculate_depth_of_field, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_delete_lens:
+                Lens_manager manager = Lens_manager.getInstance();
+                if(index >= 0 && index < manager.getSize()) {
+                    Toast.makeText(this, "lens" + manager.getByIndex(index) + " is removed!", Toast.LENGTH_SHORT).show();
+                    manager.removeLens(index);
+                    NavUtils.navigateUpFromSameTask(this);
+                }
+                else
+                    Toast.makeText(this, "please chose another lens.", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.action_edit_lens:
+                Intent i_AddLens = AddLens.makeLaunchIntent(CalculateDepthOfField.this, "switch to Lens saving!", index);
+                startActivity(i_AddLens);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     // it is used to capture the information from each editText
@@ -148,30 +176,5 @@ public class CalculateDepthOfField extends AppCompatActivity {
                 updateUIALL();
             }
         });
-    }
-
-    // following two override functions will set up the remove button on the tool bar
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_calculate_depth_of_field, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_delete_lens:
-                Lens_manager manager = Lens_manager.getInstance();
-                if(index >= 0 && index < manager.getSize()) {
-                    Toast.makeText(this, "lens" + manager.getByIndex(index) + " is removed!", Toast.LENGTH_SHORT).show();
-                    manager.removeLens(index);
-                    NavUtils.navigateUpFromSameTask(this);
-                }
-                else
-                    Toast.makeText(this, "please chose another lens.", Toast.LENGTH_SHORT).show();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 }

@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 public class AddLens extends AppCompatActivity {
     private static final String EXTRA_MESSAGE = "Extra - message";
+    private static int index = -1;
 
     private double focalLength, aperture;
     private String make;
@@ -105,7 +106,8 @@ public class AddLens extends AppCompatActivity {
                     make = makeInput.getText().toString();
                     aperture = Double.valueOf(apertureInput.getText().toString());
                     focalLength = Double.valueOf(focalLengthInput.getText().toString());
-                    addLensToManager();
+                    if(index == -1) addLensToManager();
+                    else editLensInManager();
                 }
                 else {
                     Toast.makeText(this, "Cannot save with invalid inputs!", Toast.LENGTH_SHORT).show();
@@ -117,10 +119,17 @@ public class AddLens extends AppCompatActivity {
         }
     }
 
+
     // interface for MainActivity to switch to AddLens activity
     public static Intent makeLaunchIntent(Context c, String message) {
         Intent intent = new Intent(c, AddLens.class);
         intent.putExtra(EXTRA_MESSAGE, message);
+        return intent;
+    }
+    public static Intent makeLaunchIntent(Context c, String message, int position) {
+        Intent intent = new Intent(c, AddLens.class);
+        intent.putExtra(EXTRA_MESSAGE, message);
+        index = position;
         return intent;
     }
 
@@ -128,5 +137,13 @@ public class AddLens extends AppCompatActivity {
     private void addLensToManager() {
         Lens_manager manager = Lens_manager.getInstance();
         manager.add(new Lens(make, aperture, focalLength));
+    }
+
+
+    private void editLensInManager() {
+        Lens_manager manager = Lens_manager.getInstance();
+        manager.getByIndex(index).setF_num(aperture);
+        manager.getByIndex(index).setFocal_len(focalLength);
+        manager.getByIndex(index).setMake(make);
     }
 }

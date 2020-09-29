@@ -91,14 +91,32 @@
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
-        android:id="@+id/constrains"
-        android:layout_width="wrap_content"
+        android:id="@+id/constrain1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Constrains:\n1. none of them is empty\n2. focal length should be greater than 0\n3. aperture is laied on [1, 22]"
+        android:text="Constrains:\n1. none of them is empty"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/apertureInput"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/apertureInput" />
+        app:layout_constraintStart_toEndOf="@+id/focalLengthInput"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/constrain2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="2. focal length should be greater than 0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/focalLengthInput"
+        app:layout_constraintTop_toBottomOf="@+id/constrain1" />
+
+    <TextView
+        android:id="@+id/constrain3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="3. aperture is between [1, 22]"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/focalLengthInput"
+        app:layout_constraintTop_toBottomOf="@+id/constrain2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

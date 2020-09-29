@@ -62,7 +62,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="8dp"
-        android:text="1. Remove Lens\n2. Error Checking Input\n3. Auto-recalculate"
+        android:text="1. Edit and Remove Lens\n2. Error Checking Input\n3. Auto-recalculate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

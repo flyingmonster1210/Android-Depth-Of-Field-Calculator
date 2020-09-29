@@ -57,22 +57,28 @@ public class Lens {
         return focal_len;
     }
 
-    public void setMake(String str) {
-        if(str != null && !str.equals("") && str.length() > 0)
+    public int setMake(String str) {
+        if(str != null && !str.equals("") && str.length() > 0) {
             make = str;
-        return ;
+            return 1;
+        }
+        return 0;
     }
 
-    public void setF_num(double num) {
-        if(num >= 0 && num <= 22)
+    public int setF_num(double num) {
+        if(num >= 0 && num <= 22) {
             F_num = num;
-        return ;
+            return 1;
+        }
+        return 0;
     }
 
-    public  void setFocal_len(double num) {
-        if(num > 0)
+    public int setFocal_len(double num) {
+        if(num > 0) {
             focal_len = num;
-        return ;
+            return 1;
+        }
+        return 0;
     }
 
     public String toString() {
