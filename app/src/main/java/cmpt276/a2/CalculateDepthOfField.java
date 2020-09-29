@@ -33,10 +33,10 @@ public class CalculateDepthOfField extends AppCompatActivity {
 
     private static int index = 0; // get lens by index in manager
     private EditText inputDistance, inputAperture;
-    private TextView outputNear, outputFar, outputDepth, outputHyperDis;
+    private TextView outputNear, outputFar, outputDepth, outputHyperDis, lensDetails;
     private double far, near, DepthField, HyperFocalDis, distance, aperture;;
     private boolean past1 = false, past2 = false;
-    private boolean[] validCheck = {false, false};
+    private boolean[] validCheck = {false, false}; // validCheck[0] - check inputDistance, validCheck[1] - check inputAperture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,7 @@ public class CalculateDepthOfField extends AppCompatActivity {
         // get the lens which is selected by the user, and print it
         Lens_manager manager = Lens_manager.getInstance();
         Lens lens = manager.getByIndex(index);
-        TextView lensDetails = findViewById(R.id.lensDetails);
+        lensDetails = findViewById(R.id.lensDetails);
         lensDetails.setText(lens.toString());
         TextView apertureLimit = findViewById(R.id.apertureLimit);
         apertureLimit.setText("[" + lens.getF_num() + ", 22]");
@@ -89,9 +89,12 @@ public class CalculateDepthOfField extends AppCompatActivity {
         updateUISingle(outputDepth, R.id.outputDepth, DepthField);
         updateUISingle(outputNear, R.id.outputNear, near);
         updateUISingle(outputFar, R.id.outputFar, far);
+        Lens_manager manager = Lens_manager.getInstance();
+        lensDetails.setText(manager.getByIndex(index).toString());
     }
     // always called by function - updateUIAll()
     private void updateUISingle(TextView textView, final int textViewID, double value) {
+        // validCheck[0] - check inputDistance, validCheck[1] - check inputAperture;
         textView = (TextView) findViewById(textViewID);
         if(validCheck[0] && validCheck[1])
             textView.setText(String.format(Locale.CANADA, "%.2f(m)", value));
@@ -137,15 +140,12 @@ public class CalculateDepthOfField extends AppCompatActivity {
 
     // it is used to capture the information from each editText
     private void monitorEditText(EditText editText, Lens lens, int position) {
+        // validCheck[0] - check inputDistance, validCheck[1] - check inputAperture;
         editText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
 //                Toast.makeText(CalculateDepthOfField.this, "text: "+s.toString(), Toast.LENGTH_SHORT).show();

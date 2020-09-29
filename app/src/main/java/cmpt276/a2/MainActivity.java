@@ -3,20 +3,25 @@ package cmpt276.a2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
     private Lens_manager manager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +32,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         this.setTitle("Depth of Field Calculator");
 
-        // initialize the lens manger
+        // initialize the lens list
         populateListView();
+        // switch to another activity - CalculateDepthOfField
         registerClick();
 
         // switch to another activity - AddLens
@@ -49,6 +55,15 @@ public class MainActivity extends AppCompatActivity {
             emptyListInfo.setVisibility(View.GONE);
             emptyListInfo2.setVisibility(View.GONE);
         }
+
+        SharedPreferences preferences;
+        SharedPreferences.Editor editor;
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = preferences.edit();
+        Gson gson = new Gson();
+        String strObject = gson.toJson(manager);
+        editor.putString("last_lens_manager", strObject);
+        editor.commit();
     }
 
     private void registerClick() {
