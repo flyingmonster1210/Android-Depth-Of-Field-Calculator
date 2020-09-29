@@ -62,8 +62,29 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="8dp"
-        android:text="1. remove len"
+        android:text="1. Remove Lens\n2. Error Checking Input\n3. Auto-recalculate"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/emptyListInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Empty Lens List"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/emptyListInfo2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="try click the plus button to add some lenses"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emptyListInfo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

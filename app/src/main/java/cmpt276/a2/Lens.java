@@ -30,14 +30,14 @@ public class Lens {
         this.make = lens.make;
         this.F_num = lens.F_num;
         this.focal_len = lens.focal_len;
-        if(F_num <= 0 || focal_len <= 0 || make == null || make.equals("")) {
+        if(F_num < 1.0 || F_num > 22 || focal_len <= 0 || make == null || make.equals("")) {
             throw new IllegalArgumentException("\nPROBLEM: in Lens constructor, f_num <= 0 || focal_len <= 0 || make == null || make.equals(\"\").");
         }
     }
 
     // f_num is aperture
     public Lens(String make, double aperture, double focal_len) {
-        if(aperture <= 0 || focal_len <= 0 || make == null || make.equals("")) {
+        if(aperture < 1.0 || aperture > 22 || focal_len <= 0 || make == null || make.equals("")) {
             throw new IllegalArgumentException("\nPROBLEM: in Lens constructor, f_num <= 0 || focal_len <= 0 || make == null || make.equals(\"\").");
         }
         this.make = make;
@@ -55,6 +55,24 @@ public class Lens {
 
     public double getFocal_len() {
         return focal_len;
+    }
+
+    public void setMake(String str) {
+        if(str != null && !str.equals("") && str.length() > 0)
+            make = str;
+        return ;
+    }
+
+    public void setF_num(double num) {
+        if(num >= 0 && num <= 22)
+            F_num = num;
+        return ;
+    }
+
+    public  void setFocal_len(double num) {
+        if(num > 0)
+            focal_len = num;
+        return ;
     }
 
     public String toString() {

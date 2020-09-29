@@ -37,6 +37,18 @@ public class MainActivity extends AppCompatActivity {
                 Intent i_AddLens = AddLens.makeLaunchIntent(MainActivity.this, "switch to Lens saving!");
                 startActivity(i_AddLens);
         });
+
+        // when the lens list is empty enable follow textView
+        TextView emptyListInfo  = findViewById(R.id.emptyListInfo);
+        TextView emptyListInfo2 = findViewById(R.id.emptyListInfo2);
+        if(manager.getSize() <= 0) {
+            emptyListInfo.setVisibility(View.VISIBLE);
+            emptyListInfo2.setVisibility(View.VISIBLE);
+        }
+        else {
+            emptyListInfo.setVisibility(View.GONE);
+            emptyListInfo2.setVisibility(View.GONE);
+        }
     }
 
     private void registerClick() {
