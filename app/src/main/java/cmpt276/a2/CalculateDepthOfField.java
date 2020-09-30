@@ -133,7 +133,7 @@ public class CalculateDepthOfField extends AppCompatActivity {
             case R.id.action_delete_lens:
                 Lens_manager manager = Lens_manager.getInstance();
                 if(index >= 0 && index < manager.getSize()) {
-//                    Toast.makeText(this, "lens" + manager.getByIndex(index) + " is removed!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "lens" + manager.getByIndex(index) + " is removed!", Toast.LENGTH_SHORT).show();
                     manager.removeLens(index);
                     this.finish();
                 }
