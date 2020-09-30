@@ -1,9 +1,25 @@
+/**
+ * MainActivity.java
+ * Weijie Zeng
+ * 301379422
+ *
+ * References:
+ * 1. notifyDataSetChanged()
+ * https://stackoverflow.com/questions/33599674/how-to-use-notifydatasetchanged
+ * 2. StartActivityForResult()
+ * https://stackoverflow.com/questions/37768604/how-to-use-startactivityforresult
+ * https://stackoverflow.com/questions/10407159/how-to-manage-startactivityforresult-on-android
+ * 3. SharedPreferences()
+ * https://www.youtube.com/watch?v=3Zrwi3FFrC8
+ * https://juejin.im/post/6844903594244702221
+ */
 package cmpt276.a2;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -24,10 +40,12 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private boolean executeCalculator = false;
+    private boolean executeCalculator = false; // true => has executed calculator at lease once
     private Lens_manager manager;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
+    private final int REQUEST_CODE_CALCULATOR = 1;
+    private final int REQUEST_CODE_ADDLENS = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         // initialize the lens list
         populateListView();
+
         // switch to another activity - CalculateDepthOfField
         registerClick();
 
@@ -48,30 +67,27 @@ public class MainActivity extends AppCompatActivity {
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(view -> {
                 Intent i_AddLens = AddLens.makeLaunchIntent(MainActivity.this, "switch to Lens saving!");
-                startActivity(i_AddLens);
-                populateListView();
+                startActivityForResult(i_AddLens, REQUEST_CODE_ADDLENS);
         });
 
-        //
+        // check and load the data to manager
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
         loadDataBeforeLaunch();
 
-        //
+        // check if manager is empty, and if yes, show info
         emptyInfo();
     }
 
     private void saveDataBeforeTerminate() {
-        // to save
+        // if manager.size() > 0, save it, otherwise, save ""
         Gson gson = new Gson();
         String strObject;
         if(manager.getSize() > 0) {
             strObject = gson.toJson(manager);
-//            Toast.makeText(this, "save: strObject is not empty", Toast.LENGTH_SHORT).show();
         }
         else {
             strObject = "";
-//            Toast.makeText(this, "save: strObject is empty", Toast.LENGTH_SHORT).show();
         }
         editor.putString("last_lens_manager", strObject);
         editor.commit();
@@ -97,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i_Calculator = CalculateDepthOfField.makeLaunchIntent(MainActivity.this, "switch to the calculator!", position);
-                startActivityForResult(i_Calculator, 1);
+                startActivityForResult(i_Calculator, REQUEST_CODE_CALCULATOR);
             }
         });
     }
@@ -105,13 +121,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1) {
-            if(resultCode == Activity.RESULT_CANCELED) {
+        if(requestCode == REQUEST_CODE_CALCULATOR) {
                 executeCalculator = true;
-                populateListView();
-                emptyInfo();
-            }
         }
+        if(requestCode == REQUEST_CODE_ADDLENS) { }
+        populateListView();
+        emptyInfo();
     }
 
     private void populateListView() {

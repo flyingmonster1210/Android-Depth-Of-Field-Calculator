@@ -1,3 +1,11 @@
+/**
+ * CalculateDepthOfField.java
+ * Weijie Zeng
+ * 301379422
+ *
+ * can do the input error checking
+ * and auto-recalculation
+ */
 package cmpt276.a2;
 
 import android.app.Activity;
@@ -9,6 +17,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -31,6 +40,7 @@ import java.util.Locale;
 
 public class CalculateDepthOfField extends AppCompatActivity {
     private static final String EXTRA_MESSAGE = "Extra - message";
+    private static final int REQUEST_CODE_CALCULATOR = 11;
 
     private static int index = 0; // get lens by index in manager
     private EditText inputDistance, inputAperture;
@@ -69,12 +79,8 @@ public class CalculateDepthOfField extends AppCompatActivity {
         // changes in input
         inputDistance = (EditText) findViewById(R.id.inputDistance);
         inputAperture = (EditText) findViewById(R.id.inputAperture);
-        monitorEditText(inputDistance, lens, 0);
-        monitorEditText(inputAperture, lens, 1);
-
-        //
-        Intent returnIntent = new Intent();
-        setResult(Activity.RESULT_CANCELED, returnIntent);
+        monitorEditText(inputDistance, 0);
+        monitorEditText(inputAperture, 1);
     }
 
     // do calculations always called by function - monitorEditText()
@@ -128,23 +134,32 @@ public class CalculateDepthOfField extends AppCompatActivity {
 //                    Toast.makeText(this, "lens" + manager.getByIndex(index) + " is removed!", Toast.LENGTH_SHORT).show();
                     manager.removeLens(index);
                     this.finish();
-//                    NavUtils.navigateUpFromSameTask(this);
                 }
                 else
                     Toast.makeText(this, "please chose another lens.", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_edit_lens:
                 Intent i_AddLens = AddLens.makeLaunchIntent(CalculateDepthOfField.this, "switch to Lens saving!", index);
-                startActivity(i_AddLens);
+                startActivityForResult(i_AddLens, REQUEST_CODE_CALCULATOR);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE_CALCULATOR) {
+            updateUIALL();
+        }
+
+    }
+
     // it is used to capture the information from each editText
-    private void monitorEditText(EditText editText, Lens lens, int position) {
+    private void monitorEditText(EditText editText, int position) {
         // validCheck[0] - check inputDistance, validCheck[1] - check inputAperture;
+        Lens_manager manager = Lens_manager.getInstance();
+        Lens lens = manager.getByIndex(index);
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -181,10 +196,10 @@ public class CalculateDepthOfField extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    protected void onDestroy() {
-//        Intent returnIntent = new Intent();
-//        setResult(Activity.RESULT_CANCELED, returnIntent);
-//        super.onDestroy();
-//    }
+    @Override
+    protected void onDestroy() {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, returnIntent);
+        super.onDestroy();
+    }
 }

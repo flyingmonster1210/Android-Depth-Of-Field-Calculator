@@ -1,5 +1,14 @@
+/**
+ * CalculateDepthOfField.java
+ * Weijie Zeng
+ * 301379422
+ *
+ * can do the input error checking
+ * and auto-recalculation
+ */
 package cmpt276.a2;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -62,9 +71,7 @@ public class AddLens extends AppCompatActivity {
     // do inputs error checking
     private TextWatcher assignCanSave = new TextWatcher() {
         @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -84,9 +91,7 @@ public class AddLens extends AppCompatActivity {
         }
 
         @Override
-        public void afterTextChanged(Editable s) {
-
-        }
+        public void afterTextChanged(Editable s) { }
     };
 
     // set up the toolbar - connect it to menu_add_lens.xml
@@ -106,7 +111,7 @@ public class AddLens extends AppCompatActivity {
                     make = makeInput.getText().toString();
                     aperture = Double.valueOf(apertureInput.getText().toString());
                     focalLength = Double.valueOf(focalLengthInput.getText().toString());
-                    if(index == -1) addLensToManager();
+                    if(index < 0) addLensToManager();
                     else editLensInManager();
                 }
                 else {
@@ -139,11 +144,26 @@ public class AddLens extends AppCompatActivity {
         manager.add(new Lens(make, aperture, focalLength));
     }
 
-
     private void editLensInManager() {
         Lens_manager manager = Lens_manager.getInstance();
         manager.getByIndex(index).setF_num(aperture);
         manager.getByIndex(index).setFocal_len(focalLength);
         manager.getByIndex(index).setMake(make);
     }
+
+    private void setIndex(int position) {
+        index = position;
+    }
+
+    @Override
+    protected void onDestroy() {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, returnIntent);
+        super.onDestroy();
+        setIndex(-1);
+        Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
+        this.finish();
+    }
+
+
 }
