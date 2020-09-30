@@ -70,12 +70,12 @@ public class Lens_manager implements Iterable<Lens>{
         Lens[] lenses = {
                 (new Lens("Canon", 1.8, 50)),
                 (new Lens("Tamron", 2.8, 90)),
-                    (new Lens("Sigma", 2.8, 200)),
-                    (new Lens("Nikon", 4, 200)),
-                    (new Lens("ElCheepo", 12, 24)),
-                    (new Lens("Leica", 5.6, 1600)),
-                    (new Lens("TheWide", 1.0, 16)),
-                    (new Lens("IWish", 1.0, 200)),
+//                (new Lens("Sigma", 2.8, 200)),
+//                (new Lens("Nikon", 4, 200)),
+//                (new Lens("ElCheepo", 12, 24)),
+//                (new Lens("Leica", 5.6, 1600)),
+//                (new Lens("TheWide", 1.0, 16)),
+//                (new Lens("IWish", 1.0, 200)),
         };
         for(Lens lens : lenses)
             manager.add(lens);

@@ -49,6 +49,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i_AddLens);
         });
 
+        //
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = preferences.edit();
+        loadDataBeforeLaunch();
+
         // when the lens list is empty enable follow textView
         TextView emptyListInfo  = findViewById(R.id.emptyListInfo);
         TextView emptyListInfo2 = findViewById(R.id.emptyListInfo2);
@@ -60,11 +65,6 @@ public class MainActivity extends AppCompatActivity {
             emptyListInfo.setVisibility(View.GONE);
             emptyListInfo2.setVisibility(View.GONE);
         }
-
-        //
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        editor = preferences.edit();
-        loadDataBeforeLaunch();
     }
 
     private void saveDataBeforeTerminate() {
@@ -96,7 +96,6 @@ public class MainActivity extends AppCompatActivity {
             manager = Lens_manager.getInstance(gson.fromJson(strObject, Lens_manager.class));
             Toast.makeText(this, "load: strObject is not empty", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(this, "count is " + Integer.toString(Lens_manager.getCount()), Toast.LENGTH_SHORT).show();
     }
 
     private void registerClick() {
