@@ -2,6 +2,7 @@ package cmpt276.a2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,8 +20,12 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     private Lens_manager manager;
+    private SharedPreferences preferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +61,42 @@ public class MainActivity extends AppCompatActivity {
             emptyListInfo2.setVisibility(View.GONE);
         }
 
-        SharedPreferences preferences;
-        SharedPreferences.Editor editor;
+        //
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
+        loadDataBeforeLaunch();
+    }
+
+    private void saveDataBeforeTerminate() {
+        // to save
         Gson gson = new Gson();
-        String strObject = gson.toJson(manager);
+        String strObject;
+        if(manager.getSize() > 0) {
+            strObject = gson.toJson(manager);
+            Toast.makeText(this, "save: strObject is not empty", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            strObject = "";
+            Toast.makeText(this, "save: strObject is empty", Toast.LENGTH_SHORT).show();
+        }
         editor.putString("last_lens_manager", strObject);
         editor.commit();
+    }
+
+    private void loadDataBeforeLaunch() {
+        // to retrieve
+        Gson gson = new Gson();
+        String strObject = preferences.getString("last_lens_manager", "");
+        if(strObject == null || strObject.equals("") || strObject.length() <= 0) {
+            manager = Lens_manager.getInstance();
+            manager.loadSimpleLenses();
+            Toast.makeText(this, "load: strObject is empty", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            manager = Lens_manager.getInstance(gson.fromJson(strObject, Lens_manager.class));
+            Toast.makeText(this, "load: strObject is not empty", Toast.LENGTH_SHORT).show();
+        }
+        Toast.makeText(this, "count is " + Integer.toString(Lens_manager.getCount()), Toast.LENGTH_SHORT).show();
     }
 
     private void registerClick() {
@@ -84,4 +117,9 @@ public class MainActivity extends AppCompatActivity {
         list.setAdapter(adapter);
     }
 
+    public void onDestroy() {
+        saveDataBeforeTerminate();
+        super.onDestroy();
+//        System.exit(0);
+    }
 }
