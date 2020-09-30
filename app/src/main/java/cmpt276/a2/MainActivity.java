@@ -1,5 +1,6 @@
 package cmpt276.a2;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -23,6 +24,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    private boolean executeCalculator = false;
     private Lens_manager manager;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
                 Intent i_AddLens = AddLens.makeLaunchIntent(MainActivity.this, "switch to Lens saving!");
                 startActivity(i_AddLens);
+                populateListView();
         });
 
         //
@@ -54,6 +57,72 @@ public class MainActivity extends AppCompatActivity {
         editor = preferences.edit();
         loadDataBeforeLaunch();
 
+        //
+        emptyInfo();
+    }
+
+    private void saveDataBeforeTerminate() {
+        // to save
+        Gson gson = new Gson();
+        String strObject;
+        if(manager.getSize() > 0) {
+            strObject = gson.toJson(manager);
+//            Toast.makeText(this, "save: strObject is not empty", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            strObject = "";
+//            Toast.makeText(this, "save: strObject is empty", Toast.LENGTH_SHORT).show();
+        }
+        editor.putString("last_lens_manager", strObject);
+        editor.commit();
+    }
+
+    private void loadDataBeforeLaunch() {
+        // to retrieve
+        Gson gson = new Gson();
+        String strObject = preferences.getString("last_lens_manager", "");
+        if(strObject == null || strObject.equals("") || strObject.length() <= 0) {
+            manager = Lens_manager.getInstance();
+            if(!executeCalculator)
+                manager.loadSimpleLenses();
+        }
+        else {
+            manager = Lens_manager.getInstance(gson.fromJson(strObject, Lens_manager.class));
+        }
+    }
+
+    private void registerClick() {
+        ListView list = (ListView) findViewById(R.id.ListViewMain);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i_Calculator = CalculateDepthOfField.makeLaunchIntent(MainActivity.this, "switch to the calculator!", position);
+                startActivityForResult(i_Calculator, 1);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1) {
+            if(resultCode == Activity.RESULT_CANCELED) {
+                executeCalculator = true;
+                populateListView();
+                emptyInfo();
+            }
+        }
+    }
+
+    private void populateListView() {
+        manager = Lens_manager.getInstance();
+        ArrayAdapter<Lens> adapter = new ArrayAdapter<Lens>(this, R.layout.da_item, manager.getManager());
+        ListView list = (ListView) findViewById(R.id.ListViewMain);
+        list.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void emptyInfo() {
         // when the lens list is empty enable follow textView
         TextView emptyListInfo  = findViewById(R.id.emptyListInfo);
         TextView emptyListInfo2 = findViewById(R.id.emptyListInfo2);
@@ -67,58 +136,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void saveDataBeforeTerminate() {
-        // to save
-        Gson gson = new Gson();
-        String strObject;
-        if(manager.getSize() > 0) {
-            strObject = gson.toJson(manager);
-            Toast.makeText(this, "save: strObject is not empty", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            strObject = "";
-            Toast.makeText(this, "save: strObject is empty", Toast.LENGTH_SHORT).show();
-        }
-        editor.putString("last_lens_manager", strObject);
-        editor.commit();
-    }
-
-    private void loadDataBeforeLaunch() {
-        // to retrieve
-        Gson gson = new Gson();
-        String strObject = preferences.getString("last_lens_manager", "");
-        if(strObject == null || strObject.equals("") || strObject.length() <= 0) {
-            manager = Lens_manager.getInstance();
-            manager.loadSimpleLenses();
-            Toast.makeText(this, "load: strObject is empty", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            manager = Lens_manager.getInstance(gson.fromJson(strObject, Lens_manager.class));
-            Toast.makeText(this, "load: strObject is not empty", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    private void registerClick() {
-        ListView list = (ListView) findViewById(R.id.ListViewMain);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i_Calculator = CalculateDepthOfField.makeLaunchIntent(MainActivity.this, "switch to the calculator!", position);
-                startActivity(i_Calculator);
-            }
-        });
-    }
-
-    private void populateListView() {
-        manager = Lens_manager.getInstance();
-        ArrayAdapter<Lens> adapter = new ArrayAdapter<Lens>(this, R.layout.da_item, manager.getManager());
-        ListView list = (ListView) findViewById(R.id.ListViewMain);
-        list.setAdapter(adapter);
-    }
-
     public void onDestroy() {
         saveDataBeforeTerminate();
         super.onDestroy();
-//        System.exit(0);
     }
 }

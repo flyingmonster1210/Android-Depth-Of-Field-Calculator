@@ -1,5 +1,6 @@
 package cmpt276.a2;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -70,11 +71,14 @@ public class CalculateDepthOfField extends AppCompatActivity {
         inputAperture = (EditText) findViewById(R.id.inputAperture);
         monitorEditText(inputDistance, lens, 0);
         monitorEditText(inputAperture, lens, 1);
+
+        //
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, returnIntent);
     }
 
     // do calculations always called by function - monitorEditText()
     private void calculateAll(Lens lens) {
-//        Toast.makeText(this, "working in calculateAll_2()", Toast.LENGTH_SHORT).show();
         Depth_calculator calculator = new Depth_calculator(lens, distance * 1000, aperture);
         far = calculator.far_focal_point() / 1000;
         near = calculator.near_focal_point() / 1000;
@@ -84,7 +88,6 @@ public class CalculateDepthOfField extends AppCompatActivity {
 
     // update UI
     private void updateUIALL() {
-//        Toast.makeText(CalculateDepthOfField.this, "past1: "+Boolean.toString(validCheck[0]) + " past2: "+Boolean.toString(validCheck[1]), Toast.LENGTH_SHORT).show();
         updateUISingle(outputHyperDis, R.id.outputHyperDis, HyperFocalDis);
         updateUISingle(outputDepth, R.id.outputDepth, DepthField);
         updateUISingle(outputNear, R.id.outputNear, near);
@@ -122,9 +125,10 @@ public class CalculateDepthOfField extends AppCompatActivity {
             case R.id.action_delete_lens:
                 Lens_manager manager = Lens_manager.getInstance();
                 if(index >= 0 && index < manager.getSize()) {
-                    Toast.makeText(this, "lens" + manager.getByIndex(index) + " is removed!", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(this, "lens" + manager.getByIndex(index) + " is removed!", Toast.LENGTH_SHORT).show();
                     manager.removeLens(index);
-                    NavUtils.navigateUpFromSameTask(this);
+                    this.finish();
+//                    NavUtils.navigateUpFromSameTask(this);
                 }
                 else
                     Toast.makeText(this, "please chose another lens.", Toast.LENGTH_SHORT).show();
@@ -148,7 +152,6 @@ public class CalculateDepthOfField extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
             @Override
             public void afterTextChanged(Editable s) {
-//                Toast.makeText(CalculateDepthOfField.this, "text: "+s.toString(), Toast.LENGTH_SHORT).show();
                 validCheck[position] = true;
                 String string = s.toString();
                 if(position == 1) {
@@ -177,4 +180,11 @@ public class CalculateDepthOfField extends AppCompatActivity {
             }
         });
     }
+
+//    @Override
+//    protected void onDestroy() {
+//        Intent returnIntent = new Intent();
+//        setResult(Activity.RESULT_CANCELED, returnIntent);
+//        super.onDestroy();
+//    }
 }
