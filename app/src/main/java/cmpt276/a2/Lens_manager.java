@@ -6,11 +6,6 @@ import java.util.Iterator;
 public class Lens_manager implements Iterable<Lens>{
     private ArrayList<Lens> manager = new ArrayList<>();
     private static Lens_manager instance;
-    public static int count = 0;
-
-    public static int getCount() {
-        return count;
-    }
 
     // a simple test
     public static void main(String[] argv) {
@@ -30,38 +25,33 @@ public class Lens_manager implements Iterable<Lens>{
 
     // create a manager only once
     public static Lens_manager getInstance() {
-        count++;
         if(instance == null) {
             // some lenses are used to initialize the lens manager
             Lens[] lenses = {
                     (new Lens("Canon", 1.8, 50)),
                     (new Lens("Tamron", 2.8, 90)),
-//                    (new Lens("Sigma", 2.8, 200)),
-//                    (new Lens("Nikon", 4, 200)),
-//                    (new Lens("ElCheepo", 12, 24)),
-//                    (new Lens("Leica", 5.6, 1600)),
-//                    (new Lens("TheWide", 1.0, 16)),
-//                    (new Lens("IWish", 1.0, 200)),
+                    (new Lens("Sigma", 2.8, 200)),
+                    (new Lens("Nikon", 4, 200)),
+                    (new Lens("ElCheepo", 12, 24)),
+                    (new Lens("Leica", 5.6, 1600)),
+                    (new Lens("TheWide", 1.0, 16)),
+                    (new Lens("IWish", 1.0, 200)),
             };
             instance = new Lens_manager(lenses);
         }
         return instance;
     }
     public  static  Lens_manager getInstance(Lens_manager tManager) {
-        count++;
         if(instance == null) {
             instance = tManager;
         }
         return instance;
     }
 
-    // the only two constructors we will use
+    // the only constructor we will use
     private Lens_manager(Lens[] lens) {
         for(Lens tmp : lens)
             manager.add(tmp);
-    }
-    private Lens_manager(ArrayList<Lens> manager) {
-        this.manager = manager;
     }
 
     //
@@ -70,12 +60,12 @@ public class Lens_manager implements Iterable<Lens>{
         Lens[] lenses = {
                 (new Lens("Canon", 1.8, 50)),
                 (new Lens("Tamron", 2.8, 90)),
-//                (new Lens("Sigma", 2.8, 200)),
-//                (new Lens("Nikon", 4, 200)),
-//                (new Lens("ElCheepo", 12, 24)),
-//                (new Lens("Leica", 5.6, 1600)),
-//                (new Lens("TheWide", 1.0, 16)),
-//                (new Lens("IWish", 1.0, 200)),
+                (new Lens("Sigma", 2.8, 200)),
+                (new Lens("Nikon", 4, 200)),
+                (new Lens("ElCheepo", 12, 24)),
+                (new Lens("Leica", 5.6, 1600)),
+                (new Lens("TheWide", 1.0, 16)),
+                (new Lens("IWish", 1.0, 200)),
         };
         for(Lens lens : lenses)
             manager.add(lens);

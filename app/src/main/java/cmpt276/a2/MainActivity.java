@@ -1,7 +1,7 @@
 /**
- * MainActivity.java
- * Weijie Zeng
- * 301379422
+ * file: MainActivity.java
+ * Author: Weijie Zeng
+ * ID: 301379422
  *
  * References:
  * 1. notifyDataSetChanged()

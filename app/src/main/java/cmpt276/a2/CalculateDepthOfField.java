@@ -1,7 +1,7 @@
 /**
- * CalculateDepthOfField.java
- * Weijie Zeng
- * 301379422
+ * file: CalculateDepthOfField.java
+ * Author: Weijie Zeng
+ * ID: 301379422
  *
  * can do the input error checking
  * and auto-recalculation
@@ -40,7 +40,7 @@ import java.util.Locale;
 
 public class CalculateDepthOfField extends AppCompatActivity {
     private static final String EXTRA_MESSAGE = "Extra - message";
-    private static final int REQUEST_CODE_CALCULATOR = 11;
+    private static final int REQUEST_CODE_AddLENS = 11; // just a random number
 
     private static int index = 0; // get lens by index in manager
     private EditText inputDistance, inputAperture;
@@ -100,6 +100,8 @@ public class CalculateDepthOfField extends AppCompatActivity {
         updateUISingle(outputFar, R.id.outputFar, far);
         Lens_manager manager = Lens_manager.getInstance();
         lensDetails.setText(manager.getByIndex(index).toString());
+        TextView apertureLimit = findViewById(R.id.apertureLimit);
+        apertureLimit.setText("[" + manager.getByIndex(index).getF_num() + ", 22]");
     }
     // always called by function - updateUIAll()
     private void updateUISingle(TextView textView, final int textViewID, double value) {
@@ -140,7 +142,7 @@ public class CalculateDepthOfField extends AppCompatActivity {
                 return true;
             case R.id.action_edit_lens:
                 Intent i_AddLens = AddLens.makeLaunchIntent(CalculateDepthOfField.this, "switch to Lens saving!", index);
-                startActivityForResult(i_AddLens, REQUEST_CODE_CALCULATOR);
+                startActivityForResult(i_AddLens, REQUEST_CODE_AddLENS);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -149,10 +151,9 @@ public class CalculateDepthOfField extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE_CALCULATOR) {
+        if(requestCode == REQUEST_CODE_AddLENS) {
             updateUIALL();
         }
-
     }
 
     // it is used to capture the information from each editText

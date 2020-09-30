@@ -1,10 +1,9 @@
 /**
- * CalculateDepthOfField.java
- * Weijie Zeng
- * 301379422
+ * file: AddLens.java
+ * Author: Weijie Zeng
+ * ID: 301379422
  *
  * can do the input error checking
- * and auto-recalculation
  */
 package cmpt276.a2;
 
@@ -68,7 +67,8 @@ public class AddLens extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
     }
-    // do inputs error checking
+
+    // do input error checking
     private TextWatcher assignCanSave = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -138,12 +138,13 @@ public class AddLens extends AppCompatActivity {
         return intent;
     }
 
-    // add a lens to the exist manager object
+    // add a lens to the exist manager object, when index < 0
     private void addLensToManager() {
         Lens_manager manager = Lens_manager.getInstance();
         manager.add(new Lens(make, aperture, focalLength));
     }
 
+    // edit a lens, when index >= 0
     private void editLensInManager() {
         Lens_manager manager = Lens_manager.getInstance();
         manager.getByIndex(index).setF_num(aperture);
@@ -151,7 +152,8 @@ public class AddLens extends AppCompatActivity {
         manager.getByIndex(index).setMake(make);
     }
 
-    private void setIndex(int position) {
+    // a static function to set index in onDestroy()
+    private static void setIndex(int position) {
         index = position;
     }
 
@@ -161,9 +163,6 @@ public class AddLens extends AppCompatActivity {
         setResult(Activity.RESULT_CANCELED, returnIntent);
         super.onDestroy();
         setIndex(-1);
-        Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show();
         this.finish();
     }
-
-
 }
