@@ -25,7 +25,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:text="Make"
+        android:text="@string/make"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
@@ -37,7 +37,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="24dp"
-        android:text="Focal Length [mm]"
+        android:text="@string/focal_length_mm"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/makeInput" />
@@ -49,7 +49,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:ems="10"
-        android:hint="ex: Canon"
+        android:hint="@string/ex_canon"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -61,7 +61,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:ems="10"
-        android:hint="ex: 200 for 200mm"
+        android:hint="@string/ex_200_for_200mm"
         android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -73,7 +73,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="24dp"
-        android:text="Aperture"
+        android:text="@string/aperture"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/focalLengthInput" />
@@ -85,7 +85,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:ems="10"
-        android:hint="ex: 2.8 for F2.8"
+        android:hint="@string/ex_2_8_for_f2_8"
         android:inputType="numberDecimal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
@@ -94,7 +94,7 @@
         android:id="@+id/constrain1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Constrains:\n1. none of them is empty"
+        android:text="@string/constrains_n1_none_of_them_is_empty"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="@+id/apertureInput"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +105,7 @@
         android:id="@+id/constrain2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="2. focal length should be greater than 0"
+        android:text="@string/_2_focal_length_should_be_greater_than_0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/focalLengthInput"
         app:layout_constraintTop_toBottomOf="@+id/constrain1" />
@@ -114,7 +114,7 @@
         android:id="@+id/constrain3"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="3. aperture is between [1, 22]"
+        android:text="@string/_3_aperture_is_between_1_22"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/focalLengthInput"
         app:layout_constraintTop_toBottomOf="@+id/constrain2" />

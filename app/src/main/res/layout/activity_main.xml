@@ -62,7 +62,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="8dp"
-        android:text="More Features:\n1. Edit and Remove Lens\n2. Error Checking Input\n3. Auto-recalculate\n4. Save and Load Data"
+        android:text="@string/more_features_n1_edit_and_remove_lens_n2_error_checking_input_n3_auto_recalculate_n4_save_and_load_data"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -70,7 +70,7 @@
         android:id="@+id/emptyListInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Empty Lens List"
+        android:text="@string/empty_lens_list"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -82,7 +82,7 @@
         android:id="@+id/emptyListInfo2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="try click the plus button to add some lenses"
+        android:text="@string/try_click_the_plus_button_to_add_some_lenses"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/emptyListInfo" />

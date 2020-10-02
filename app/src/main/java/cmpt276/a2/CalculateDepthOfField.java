@@ -43,11 +43,11 @@ public class CalculateDepthOfField extends AppCompatActivity {
     private static final int REQUEST_CODE_AddLENS = 11; // just a random number
 
     private static int index = 0; // get lens by index in manager
-    private EditText inputDistance, inputAperture;
+    private EditText inputDistance, inputAperture, inputCOC;
     private TextView outputNear, outputFar, outputDepth, outputHyperDis, lensDetails;
-    private double far, near, DepthField, HyperFocalDis, distance, aperture;;
-    private boolean past1 = false, past2 = false;
-    private boolean[] validCheck = {false, false}; // validCheck[0] - check inputDistance, validCheck[1] - check inputAperture;
+    private double far, near, DepthField, HyperFocalDis, distance, aperture;
+    // validCheck[0] - check inputDistance, validCheck[1] - check inputAperture, validCheck[2] - check inputCOC;
+    private boolean[] validCheck = {false, false, true};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,39 +79,13 @@ public class CalculateDepthOfField extends AppCompatActivity {
         // changes in input
         inputDistance = (EditText) findViewById(R.id.inputDistance);
         inputAperture = (EditText) findViewById(R.id.inputAperture);
+        inputCOC = findViewById(R.id.coc);
         monitorEditText(inputDistance, 0);
         monitorEditText(inputAperture, 1);
+        monitorEditText(inputCOC, 2);
+        inputCOC.setText(Double.toString(Depth_calculator.getCOC()));
     }
 
-    // do calculations always called by function - monitorEditText()
-    private void calculateAll(Lens lens) {
-        Depth_calculator calculator = new Depth_calculator(lens, distance * 1000, aperture);
-        far = calculator.far_focal_point() / 1000;
-        near = calculator.near_focal_point() / 1000;
-        DepthField = calculator.depth_field() / 1000;
-        HyperFocalDis = calculator.hyper_focal_distance() / 1000;
-    }
-
-    // update UI
-    private void updateUIALL() {
-        updateUISingle(outputHyperDis, R.id.outputHyperDis, HyperFocalDis);
-        updateUISingle(outputDepth, R.id.outputDepth, DepthField);
-        updateUISingle(outputNear, R.id.outputNear, near);
-        updateUISingle(outputFar, R.id.outputFar, far);
-        Lens_manager manager = Lens_manager.getInstance();
-        lensDetails.setText(manager.getByIndex(index).toString());
-        TextView apertureLimit = findViewById(R.id.apertureLimit);
-        apertureLimit.setText("[" + manager.getByIndex(index).getF_num() + ", 22]");
-    }
-    // always called by function - updateUIAll()
-    private void updateUISingle(TextView textView, final int textViewID, double value) {
-        // validCheck[0] - check inputDistance, validCheck[1] - check inputAperture;
-        textView = (TextView) findViewById(textViewID);
-        if(validCheck[0] && validCheck[1])
-            textView.setText(String.format(Locale.CANADA, "%.2f(m)", value));
-        else
-            textView.setText("Invalid");
-    }
 
     // interface for MainActivity to switch to AddLens activity
     public static Intent makeLaunchIntent(Context c, String message, int position) {
@@ -158,7 +132,7 @@ public class CalculateDepthOfField extends AppCompatActivity {
 
     // it is used to capture the information from each editText
     private void monitorEditText(EditText editText, int position) {
-        // validCheck[0] - check inputDistance, validCheck[1] - check inputAperture;
+        // validCheck[0] - check inputDistance, validCheck[1] - check inputAperture, validCheck[2] - check inputCOC;
         Lens_manager manager = Lens_manager.getInstance();
         Lens lens = manager.getByIndex(index);
         editText.addTextChangedListener(new TextWatcher() {
@@ -170,31 +144,78 @@ public class CalculateDepthOfField extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 validCheck[position] = true;
                 String string = s.toString();
-                if(position == 1) {
-                    if (string == null || string.equals("")) validCheck[position] = false;
-                    else {
-                        aperture = Double.valueOf(string);
-                        if (aperture < lens.getF_num() || aperture > 22)
+                // validCheck[0] - check inputDistance, validCheck[1] - check inputAperture, validCheck[2] - check inputCOC;
+                switch (position) {
+                    case 0:
+                        if (string == null || string.equals(""))
                             validCheck[position] = false;
-                        if (validCheck[0] && validCheck[1]) {
-                            calculateAll(lens);
+                        else {
+                            distance = Double.valueOf(string);
+                            if (distance < 0)
+                                validCheck[position] = false;
+                            if (validCheck[0] && validCheck[1] && validCheck[2]) {
+                                calculateAll(lens);
+                            }
                         }
-                    }
-                }
-                else {
-                    if (string == null || string.equals("")) validCheck[position] = false;
-                    else {
-                        distance = Double.valueOf(string);
-                        if (distance < 0)
+                        break;
+                    case 1:
+                        if (string == null || string.equals(""))
                             validCheck[position] = false;
-                        if (validCheck[0] && validCheck[1]) {
-                            calculateAll(lens);
+                        else {
+                            aperture = Double.valueOf(string);
+                            if (aperture < lens.getF_num() || aperture > 22)
+                                validCheck[position] = false;
+                            if (validCheck[0] && validCheck[1] && validCheck[2]) {
+                                calculateAll(lens);
+                            }
                         }
-                    }
+                        break;
+                    case 2:
+                        if (string == null || string.equals(""))
+                            validCheck[position] = false;
+                        else {
+                            double COC = Double.valueOf(string);
+                            if (COC <= 0)
+                                validCheck[position] = false;
+                            else
+                                Depth_calculator.setCOC(COC);
+                            if (validCheck[0] && validCheck[1] && validCheck[2])
+                                calculateAll(lens);
+                        }
                 }
                 updateUIALL();
             }
         });
+    }
+
+    // do calculations always called by function - monitorEditText()
+    private void calculateAll(Lens lens) {
+        Depth_calculator calculator = new Depth_calculator(lens, distance * 1000, aperture);
+        far = calculator.far_focal_point() / 1000;
+        near = calculator.near_focal_point() / 1000;
+        DepthField = calculator.depth_field() / 1000;
+        HyperFocalDis = calculator.hyper_focal_distance() / 1000;
+    }
+
+    // update UI
+    private void updateUIALL() {
+        updateUISingle(outputHyperDis, R.id.outputHyperDis, HyperFocalDis);
+        updateUISingle(outputDepth, R.id.outputDepth, DepthField);
+        updateUISingle(outputNear, R.id.outputNear, near);
+        updateUISingle(outputFar, R.id.outputFar, far);
+        Lens_manager manager = Lens_manager.getInstance();
+        lensDetails.setText(manager.getByIndex(index).toString());
+        TextView apertureLimit = findViewById(R.id.apertureLimit);
+        apertureLimit.setText("[" + manager.getByIndex(index).getF_num() + ", 22]");
+    }
+    // always called by function - updateUIAll()
+    private void updateUISingle(TextView textView, final int textViewID, double value) {
+        // validCheck[0] - check inputDistance, validCheck[1] - check inputAperture;
+        textView = (TextView) findViewById(textViewID);
+        if(validCheck[0] && validCheck[1] && validCheck[2])
+            textView.setText(String.format(Locale.CANADA, "%.2f(m)", value));
+        else
+            textView.setText("Invalid");
     }
 
     @Override

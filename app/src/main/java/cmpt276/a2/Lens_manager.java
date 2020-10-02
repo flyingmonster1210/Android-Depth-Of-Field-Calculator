@@ -54,7 +54,7 @@ public class Lens_manager implements Iterable<Lens>{
             manager.add(tmp);
     }
 
-    //
+    // add simple lenses to exiting manager
     public void loadSimpleLenses() {
         manager.clear();
         Lens[] lenses = {

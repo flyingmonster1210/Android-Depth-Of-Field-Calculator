@@ -11,7 +11,7 @@
         android:id="@+id/outputHyperDis"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NONE"
+        android:text="@string/none"
         app:layout_constraintBottom_toBottomOf="@+id/hyperfocalDistance"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/hyperfocalDistance" />
@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Near Focal Distance"
+        android:text="@string/near_focal_distance"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
@@ -49,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Far Focal Distance"
+        android:text="@string/far_focal_distance"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/nearFocalDistance" />
 
@@ -65,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Depth of Field"
+        android:text="@string/depth_of_field"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/farFocalDistance" />
 
@@ -74,7 +74,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Hyperfocal Distance"
+        android:text="@string/hyperfocal_distance"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/depthOfField" />
 
@@ -82,7 +82,7 @@
         android:id="@+id/outputNear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NONE"
+        android:text="@string/none"
         app:layout_constraintBottom_toBottomOf="@+id/nearFocalDistance"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/nearFocalDistance" />
@@ -91,7 +91,7 @@
         android:id="@+id/outputFar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NONE"
+        android:text="@string/none"
         app:layout_constraintBottom_toBottomOf="@+id/farFocalDistance"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/farFocalDistance" />
@@ -100,7 +100,7 @@
         android:id="@+id/outputDepth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NONE"
+        android:text="@string/none"
         app:layout_constraintBottom_toBottomOf="@+id/depthOfField"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="@+id/depthOfField" />
@@ -130,7 +130,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
-        android:text="Circle of Confusion [mm]"
+        android:text="@string/circle_of_confusion_mm"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/textView1" />
 
@@ -141,7 +141,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
-        android:text="Distance to subject [m]"
+        android:text="@string/distance_to_subject_m"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/COC" />
 
@@ -152,31 +152,19 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
-        android:text="Seleted aperture"
+        android:text="@string/seleted_aperture"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="@+id/distanceLimit" />
-
-    <TextView
-        android:id="@+id/textView16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:text="0.029"
-        app:layout_constraintBottom_toBottomOf="@+id/COC"
-        app:layout_constraintStart_toEndOf="@+id/COC"
-        app:layout_constraintTop_toTopOf="@+id/COC" />
 
     <EditText
         android:id="@+id/inputDistance"
         android:layout_width="180dp"
         android:layout_height="40dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
         android:ems="10"
-        android:hint="ex. 1.5 for 1.5m"
+        android:hint="@string/ex_1_5_for_1_5m"
         android:inputType="numberDecimal"
         app:layout_constraintBottom_toBottomOf="@+id/distance"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/distance"
         app:layout_constraintTop_toTopOf="@+id/distance" />
 
@@ -184,12 +172,11 @@
         android:id="@+id/inputAperture"
         android:layout_width="180dp"
         android:layout_height="40dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
         android:ems="10"
         android:hint="ex. 2.8 for F2.8"
         android:inputType="numberDecimal"
         app:layout_constraintBottom_toBottomOf="@+id/aperture"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/aperture"
         app:layout_constraintTop_toTopOf="@+id/aperture" />
 
@@ -200,7 +187,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:text="Photo details with"
+        android:text="@string/photo_details_with"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line" />
 
@@ -208,7 +195,7 @@
         android:id="@+id/lensDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/textview"
         android:textSize="16sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="@+id/textView1"
@@ -219,7 +206,7 @@
         android:id="@+id/apertureLimit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="@string/textview"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/aperture"
         app:layout_constraintStart_toStartOf="@+id/aperture"
@@ -229,10 +216,32 @@
         android:id="@+id/distanceLimit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="(0, INF)"
+        android:text="@string/_0_inf"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/distance"
         app:layout_constraintStart_toStartOf="@+id/distance"
         app:layout_constraintTop_toBottomOf="@+id/distance" />
+
+    <EditText
+        android:id="@+id/coc"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="@string/ex_0_029"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="@+id/COC"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/COC"
+        app:layout_constraintTop_toTopOf="@+id/COC" />
+
+    <TextView
+        android:id="@+id/cocLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/_0_inf"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/COC"
+        app:layout_constraintStart_toStartOf="@+id/COC"
+        app:layout_constraintTop_toBottomOf="@+id/COC" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
